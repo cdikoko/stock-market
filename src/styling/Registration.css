@@ -1,0 +1,23 @@
+.registration-form {
+    position: absolute;
+    border: white solid 1px;
+    top: 14%;
+    left: 12%;
+    right: 12%;
+    height: 300px;
+    color: white;
+    font-size: 12px;
+}
+
+.registration-form-fields {
+
+}
+
+input[type=text] {
+    padding: 0;
+    margin: 11px;
+    box-sizing: border-box;
+    background-color: black;
+    border: white solid 1px;
+    color: white;
+}
