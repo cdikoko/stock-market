@@ -1,57 +1,16 @@
-.navbar {
-    /*border-bottom: #edf0f1 1px solid;*/
-
-}
-
-.border-bot {
-    border: #abbcc9 1px solid;
-    /*width: 300px;*/
-    margin: 0 auto;
-    width: 75%;
-}
-
-li, a, option {
-    font-family: "JetBrains Mono Thin";
-    font-size: 20px;
-    font-weight: 500;
-    color: #edf0f1;
+a {
     text-decoration: none;
-    list-style: none;
 }
 
-#companies-dd{
-    color: black !important;
-}
-.nav-links {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 88%;
+svg:hover {
+    cursor: pointer;
 }
 
-.dropdown {
-    display: flex;
-    flex-direction: column;
-}
-
-.dropdown:hover {
-    color: skyblue;
-}
-
-li a:hover{
-    color: skyblue;
-}
-
-label {
-    cursor : pointer
+svg {
+    margin-left: 50%;
 }
 
 .tab-items {
-    height: 3vh;
-    width: 20%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-left: 12%
+    width: max-content;
+    margin: 2vh 20vw;
 }
-

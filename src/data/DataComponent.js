@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import { readFromCache, writeToCache } from '../common/cache'
 import '../styling/Table.css'
+import { Table, Button } from 'react-bootstrap'
 
 export function DataComponent() {
 
@@ -34,8 +35,7 @@ export function DataComponent() {
     }
 
     //delete selected item
-    function save(e) {
-        e.preventDefault()
+    function deleteItem() {
         console.log("we here")
         let newCompanies = companies.filter(item => {
             if (document.getElementById(item.name).style.backgroundColor === "red") {
@@ -49,8 +49,8 @@ export function DataComponent() {
     }
 
     return (
-        <div id="Table">
-            <table>
+        <div className="table-wrapper">
+            <Table striped bordered hover size="sm">
                 <thead>
                     <tr id="Headers">
                         {headers.map((item, idx) => <th key={idx}>{item}</th>)}
@@ -59,11 +59,12 @@ export function DataComponent() {
                 <tbody>
                     {companies.map(renderData)}
                 </tbody>
-            </table>
-            <form onSubmit={(e) => save(e)}>
-                <button>Delete</button>
-            </form>
-        </div>)
+            </Table>
+            <Button onClick={() => deleteItem()}>
+                Delete
+            </Button>
+        </div>
+    )
 
 }
 
