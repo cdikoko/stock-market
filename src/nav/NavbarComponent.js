@@ -1,11 +1,15 @@
-import {React, useState} from "react"
+import { React, useState } from "react"
 import "../styling/Nav.css"
-import {Link} from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { Nav, Container, Navbar, ListGroup, Card } from 'react-bootstrap'
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 
 function NavbarComponent() {
 
     const [loggedIn, setLoggedIn] = useState(false)
     const [showDropdown, setShowDropdown] = useState(false)
+
+    const history = useHistory()
 
     const loginOrOut = (e) => {
         e.preventDefault()
@@ -17,41 +21,50 @@ function NavbarComponent() {
     }
 
     const options = [
-       {
+        {
             name: "Register",
             handler: "/company/register"
-        },{
-            name: "Delete",
-            handler: "/company/delete"
         }
     ]
 
+    const onClickDropdown = () => {
+        setShowDropdown(true)
+        history.push('/')
+    }
+
     return (
-        <header>
-            <nav className='navbar' role="navigation">
-                <ul className="nav-links">
-                    <li>
-                        <div className="dropdown">
 
-
-                            <label onClick={() => setShowDropdown(!showDropdown)}
-                                   htmlFor="companies-dd"><Link to={"/"}>Companies</Link></label>
-
-                        </div>
-                    </li>
-                    <li><Link to="/company/view">Stock Exchange</Link></li>
-                    <li><a onClick={(e) => loginOrOut(e)} href="">{loggedIn ? "Logout" : "Login"}</a></li>
-                </ul>
-            </nav>
-            <div className="border-bot"/>
+        <>
+            <Navbar bg="dark" variant="dark" expand="md">
+                <Container>
+                    <Navbar.Brand href="">Lemontez Exchange</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="" onClick={() => onClickDropdown()}>
+                                Companies
+                            </Nav.Link>
+                            <Nav.Link onClick={() => history.push('/company/view')}>Stock Exchange</Nav.Link>
+                            <Nav.Link className="login-btn" onClick={(e) => loginOrOut(e)} href="">{loggedIn ? "Logout" : "Login"}</Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
             {showDropdown &&
-            <ul className="tab-items">
-                {options.map(companyOption => <li onClick={() => setShowDropdown(!showDropdown)} className="dropdown" key={companyOption.name}>
-                    <Link to={companyOption.handler}>{companyOption.name}</Link></li>)}
-            </ul>
-            }
+                <div className="tab-items">
+                    <IoIosArrowUp onClick={() => setShowDropdown(false)} />
+                    <Card>
+                        <ListGroup variant="flush" >
+                            {options.map(companyOption => <ListGroup.Item onClick={() => setShowDropdown(!showDropdown)} className="dropdown" key={companyOption.name}>
+                                <Link to={companyOption.handler}>{companyOption.name}</Link></ListGroup.Item>)}
+                        </ListGroup>
+                    </Card>
+                </div>
 
-        </header>
+            }
+        </>
+
+
     );
 }
 
