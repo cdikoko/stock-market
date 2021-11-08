@@ -1,41 +1,43 @@
-import {React, useState} from 'react'
+import { React, useState } from 'react'
 import '../styling/Delete.css'
 import DataComponent from "../data/DataComponent";
-import {Link} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { readFromCache, writeToCache } from '../common/cache';
 
 function DeleteComponent() {
     const [company, setCompany] = useState("")
 
+    const history = useHistory()
+
     function remove(company) {
-        let arr = []
-        arr = JSON.parse(localStorage.getItem("data"))
-        arr.filter(c => c.name !== company)
-        alert("updating local storage")
-        localStorage.setItem("data", JSON.stringify(arr))
+        let arr = readFromCache('data')
+        arr = arr.filter(c => {
+            console.log(c)
+            console.log(company)
+            return c.name !== company
+        })
+        console.log(arr)
+        writeToCache('data', arr)
     }
 
     function handleSubmit(e) {
+        console.log(e)
+        e.preventDefault()
         remove(company)
-        console.log("Company has been removed successfully i think", localStorage.getItem("data"))
+        console.log("Company has been removed successfully i think", readFromCache('data'))
+        // history.push('/')
     }
 
-    function handleChange(e){
-        setCompany(e.target.value)
-    }
-
-    return (
+    return (    
         <div>
-            <form onSubmit={(e
-            ) => handleSubmit(e)}>
-                <div className={"delete-company-div"}>
-                    <label className={"delete-company-label"}>Enter company name: </label>
-                    <input type={"text"} onChange={(e) => handleChange(e)}/>
-                    <Link to={"/"}>
-                        <input type={"submit"} value={"Submit"}/>
-                    </Link>
+            <form onSubmit={(e) => handleSubmit(e)}>
+                <div className="delete-company-div">
+                    <label className="delete-company-label">Enter company name: </label>
+                    <input type="text" onChange={(e) => setCompany(e.target.value)} />
+                    <input type="submit" value="Submit" />
                 </div>
             </form>
-            <DataComponent/>
+            <DataComponent />
         </div>
     )
 }

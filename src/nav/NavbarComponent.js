@@ -1,6 +1,6 @@
-import {React, useState} from "react"
+import { React, useState } from "react"
 import "../styling/Nav.css"
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function NavbarComponent() {
 
@@ -17,12 +17,9 @@ function NavbarComponent() {
     }
 
     const options = [
-       {
+        {
             name: "Register",
             handler: "/company/register"
-        },{
-            name: "Delete",
-            handler: "/company/delete"
         }
     ]
 
@@ -32,23 +29,19 @@ function NavbarComponent() {
                 <ul className="nav-links">
                     <li>
                         <div className="dropdown">
-
-
-                            <label onClick={() => setShowDropdown(!showDropdown)}
-                                   htmlFor="companies-dd"><Link to={"/"}>Companies</Link></label>
-
+                            <label onClick={() => setShowDropdown(!showDropdown)}><Link to={"/"}>Companies</Link></label>
                         </div>
                     </li>
                     <li><Link to="/company/view">Stock Exchange</Link></li>
                     <li><a onClick={(e) => loginOrOut(e)} href="">{loggedIn ? "Logout" : "Login"}</a></li>
                 </ul>
             </nav>
-            <div className="border-bot"/>
+            <div className="border-bot" />
             {showDropdown &&
-            <ul className="tab-items">
-                {options.map(companyOption => <li onClick={() => setShowDropdown(!showDropdown)} className="dropdown" key={companyOption.name}>
-                    <Link to={companyOption.handler}>{companyOption.name}</Link></li>)}
-            </ul>
+                <ul className="tab-items">
+                    {options.map(companyOption => <li onClick={() => setShowDropdown(!showDropdown)} className="dropdown" key={companyOption.name}>
+                        <Link to={companyOption.handler}>{companyOption.name}</Link></li>)}
+                </ul>
             }
 
         </header>

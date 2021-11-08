@@ -1,9 +1,10 @@
-import {React, useState} from 'react'
+import { React, useState } from 'react'
+import { readFromCache, writeToCache } from '../common/cache'
 import '../styling/Table.css'
 
 export function DataComponent() {
 
-    const companiesList = JSON.parse(window.localStorage.getItem("data")).sort((a, b) => {
+    const companiesList = readFromCache('data').sort((a, b) => {
         if (a.exchange < b.exchange) return -1
         if (a.exchange > b.exchange) return 1
         return 0
@@ -13,7 +14,7 @@ export function DataComponent() {
     const headers = ['Name', 'Stock Price', 'Number of Empoyees', 'Stock Exchange']
 
     function handleClick(e) {
-        if(e.target.parentElement){
+        if (e.target.parentElement) {
             console.log(e.target.id)
             let elementById = document.getElementById(e.target.id);
             console.log("element", elementById)
@@ -32,37 +33,37 @@ export function DataComponent() {
         )
     }
 
+    //delete selected item
     function save(e) {
         e.preventDefault()
         console.log("we here")
         let newCompanies = companies.filter(item => {
-            if(document.getElementById(item.name).style.backgroundColor === "red"){
+            if (document.getElementById(item.name).style.backgroundColor === "red") {
                 document.getElementById(item.name).style = undefined
                 return false;
             }
             return true;
-        } )
+        })
+        writeToCache('data', newCompanies)
         setCompanies(newCompanies)
-        localStorage.setItem("data", JSON.stringify(companies))
-        console.log(newCompanies)
     }
 
     return (
-    <div id="Table">
-        <table>
-            <thead>
-            <tr id="Headers">
-                {headers.map((item, idx) => <th key={idx}>{item}</th>)}
-            </tr>
-            </thead>
-            <tbody>
-            {companies.map(renderData)}
-            </tbody>
-        </table>
-        <form onSubmit={(e) => save(e)}>
-            <button>Save</button>
-        </form>
-    </div>)
+        <div id="Table">
+            <table>
+                <thead>
+                    <tr id="Headers">
+                        {headers.map((item, idx) => <th key={idx}>{item}</th>)}
+                    </tr>
+                </thead>
+                <tbody>
+                    {companies.map(renderData)}
+                </tbody>
+            </table>
+            <form onSubmit={(e) => save(e)}>
+                <button>Delete</button>
+            </form>
+        </div>)
 
 }
 
